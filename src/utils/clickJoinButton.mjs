@@ -1,25 +1,16 @@
 const clickJoinButton = async (page) => {
   console.log("🎯 Mencari tombol join...");
 
-  while (true) {
-    const clicked = await page.evaluate(() => {
-      const btn = document.querySelector("#join-btn");
-
-      if (btn && !btn.disabled) {
-        btn.click();
-        return true;
-      }
-
-      return false;
-    });
-
-    if (clicked) {
-      console.log("🔥 BERHASIL KLIK JOIN");
-      break;
+  await page.waitForFunction(() => {
+    const btn = document.querySelector("#join-btn");
+    if (btn && !btn.disabled) {
+      btn.click();
+      return true;
     }
+    return false;
+  }, { timeout: 0, polling: 100 }); // polling 100ms, timeout 0 = tunggu selamanya
 
-    await new Promise(r => setTimeout(r, 20)); // super cepat
-  }
+  console.log("🔥 BERHASIL KLIK JOIN");
 };
 
-export default clickJoinButton
+export default clickJoinButton;
