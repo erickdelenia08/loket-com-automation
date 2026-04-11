@@ -1,5 +1,5 @@
 import connect from "./browser/connect.mjs";
-import { dummy_widget_code, ticket_selector, main_url } from "./config.mjs";
+// import { dummy_widget_code, ticket_selector, main_url } from "./config.mjs";
 import getCsrf from "./extractors/getCrsf.mjs";
 import getInvoice from "./extractors/getInvoice.mjs";
 import getWidgetCode from "./extractors/getWidgetCode.mjs";

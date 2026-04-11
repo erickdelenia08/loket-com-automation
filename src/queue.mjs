@@ -6,11 +6,11 @@ import { main_url,widget_link_selector } from "./config.mjs";
 
 const page = await connect();
 
-await page.goto(main_url, {
+await page.goto('https://widget.loket.com/widget/asfljljabgke145habgkj', {
   waitUntil: "networkidle2",
 });
 
-await waitForWidgedSpawn(page,widget_link_selector)
+// await waitForWidgedSpawn(page,widget_link_selector)
 
 await waitForCloudflare(page);
 

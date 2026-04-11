@@ -3,12 +3,16 @@ const clickJoinButton = async (page) => {
 
   await page.waitForFunction(() => {
     const btn = document.querySelector("#join-btn");
-    if (btn && !btn.disabled) {
+    if (!btn) return false;
+
+    const isDisabled = btn.classList.contains("btn-disabled");
+    if (!isDisabled) {
       btn.click();
       return true;
     }
+
     return false;
-  }, { timeout: 0, polling: 100 }); // polling 100ms, timeout 0 = tunggu selamanya
+  }, { timeout: 0, polling: 100 });
 
   console.log("🔥 BERHASIL KLIK JOIN");
 };
