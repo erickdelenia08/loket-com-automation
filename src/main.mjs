@@ -8,9 +8,10 @@ import confirm_choice from "./requests/confirm_choice.mjs";
 import register from "./requests/register.mjs";
 import submit from "./requests/submit.mjs";
 import charge from "./requests/charge.mjs";
-import getTickets from "./extractors/getTickets.mjs";
+import getAllTickets from "./extractors/getAllTickets.mjs";
 import "dotenv/config";
 import getLastUrlSegment from "./extractors/getLastUrlSegment.mjs";
+import mapTickets from "./extractors/mapTickets.mjs";
 
 const page = await connect();
 
@@ -21,21 +22,25 @@ console.log("csrf_token:", csrf_token);
 console.log("widget_code:", widget_code);
 
 const ticket_qty = 1;
-const TICKET_INDEX = 1;
-const tickets = await getTickets(page, TICKET_INDEX, ticket_qty);
-console.log(tickets);
+const TICKET_NAME = 'anj';
 
-const result = await check_quantity(
-  page,
-  tickets[TICKET_INDEX].id_group,
-  tickets[TICKET_INDEX].id_ticket,
-  ticket_qty,
-  csrf_token,
-  widget_code,
-);
+const tickets = await getAllTickets(page, TICKET_NAME, ticket_qty);
+const ticket= mapTickets(tickets,TICKET_NAME,ticket_qty)
+// console.log(tickets);
+console.log(ticket);
 
-if (result.error) process.exit(0);
-console.log(result);
+
+// const result = await check_quantity(
+//   page,
+//   tickets[TICKET_INDEX].id_group,
+//   tickets[TICKET_INDEX].id_ticket,
+//   ticket_qty,
+//   csrf_token,
+//   widget_code,
+// );
+
+// if (result.error) process.exit(0);
+// console.log(result);
 
 await confirm_choice(page, { widget_code, csrf_token, tickets });
 
