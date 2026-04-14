@@ -64,47 +64,7 @@ const tickets = [
     qty: 0,
   },
 ];
-[
-  {
-    id_ticket: "397826",
-    id_group: "171313",
-    qty: 0,
-  },
-  {
-    id_ticket: "397827",
-    id_group: "171313",
-    qty: 0,
-  },
-  {
-    id_ticket: "397828",
-    id_group: "171313",
-    qty: 0,
-  },
-  {
-    id_ticket: "397829",
-    id_group: "171313",
-    qty: 0,
-  },
-  {
-    id_ticket: "397830",
-    id_group: "171313",
-    qty: 0,
-  },
-  {
-    id_ticket: "397831",
-    id_group: "171313",
-    qty: 0,
-  },
-  {
-    id_ticket: "397832",
-    id_group: "171313",
-    qty: 0,
-  },
-  {
-    id_ticket: "397833",
-    id_group: "171313",
-    qty: 0,
-  },
-];
 
-tickets.map();
+const a=tickets.filter((e)=>e.harga>4000000
+)
+console.log(a);

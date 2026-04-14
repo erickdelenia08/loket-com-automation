@@ -12,41 +12,51 @@ import getAllTickets from "./extractors/getAllTickets.mjs";
 import "dotenv/config";
 import getLastUrlSegment from "./extractors/getLastUrlSegment.mjs";
 import mapTickets from "./extractors/mapTickets.mjs";
+import getMaxQtyTicket from "./extractors/getMaxQtyTicket.mjs";
 
 const page = await connect();
 
 const csrf_token = await getCsrf(page);
 const widget_code = getWidgetCode(page.url());
+const max_qty_ticket = await getMaxQtyTicket(page);
 
 console.log("csrf_token:", csrf_token);
 console.log("widget_code:", widget_code);
+console.log("max_qty_ticket:", max_qty_ticket);
 
 const ticket_qty = 1;
-const TICKET_NAME = 'anj';
+const TICKET_NAME = "GREEN";
 
-const tickets = await getAllTickets(page, TICKET_NAME, ticket_qty);
-const ticket= mapTickets(tickets,TICKET_NAME,ticket_qty)
-// console.log(tickets);
-console.log(ticket);
+let tickets = await getAllTickets(page, TICKET_NAME, ticket_qty);
+tickets = mapTickets(tickets, TICKET_NAME, ticket_qty);
+console.log(tickets);
 
+const result = await check_quantity(
+  page,
+  tickets[0].id_group,
+  tickets[0].id_ticket,
+  ticket_qty,
+  csrf_token,
+  widget_code,
+);
+console.log(result);
 
-// const result = await check_quantity(
-//   page,
-//   tickets[TICKET_INDEX].id_group,
-//   tickets[TICKET_INDEX].id_ticket,
-//   ticket_qty,
-//   csrf_token,
-//   widget_code,
-// );
+if (result.error) process.exit(0);
+console.log(result);
 
-// if (result.error) process.exit(0);
-// console.log(result);
+// Biar DevTools console browser muncul di terminal juga
+// page.on('console', msg => console.log('🌐 Browser log:', msg.text()));
 
-await confirm_choice(page, { widget_code, csrf_token, tickets });
+const confirm_res=await confirm_choice(page, { widget_code, csrf_token, tickets,max_qty_ticket });
+console.log('confirm');
+
+console.log(confirm_res);
+
+if (getLastUrlSegment(confirm_res.url) != "register") process.exit(0);
 
 await page.goto(`https://widget.loket.com/widget/${widget_code}/register`, {
   waitUntil: "networkidle2",
-}); // tambah await
+}); 
 
 const result2 = await register(page, {
   widget_code,
@@ -63,7 +73,6 @@ const result2 = await register(page, {
   gender: process.env.gender, // 2:perempuan 1: laki
   receive_wa_notif: "0", // 0:no 1: yes
 });
-
 
 if (getLastUrlSegment(result2.url) != "confirm") process.exit(0);
 
