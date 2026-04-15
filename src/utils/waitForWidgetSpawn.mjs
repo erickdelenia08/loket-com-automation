@@ -1,5 +1,5 @@
 const waitForWidgedSpawn = async (page, selector) => {
-  const RELOAD_INTERVAL = 150;
+  const RELOAD_INTERVAL = 50;
 
   console.log("👀 Monitoring container:", selector);
 

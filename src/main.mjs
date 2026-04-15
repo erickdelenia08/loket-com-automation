@@ -25,7 +25,7 @@ console.log("widget_code:", widget_code);
 console.log("max_qty_ticket:", max_qty_ticket);
 
 const ticket_qty = 1;
-const TICKET_NAME = "GREEN";
+const TICKET_NAME = "cat 1";
 
 let tickets = await getAllTickets(page, TICKET_NAME, ticket_qty);
 tickets = mapTickets(tickets, TICKET_NAME, ticket_qty);
