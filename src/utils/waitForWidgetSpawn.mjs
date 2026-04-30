@@ -43,7 +43,7 @@ const waitForWidgedSpawn = async (page, selector) => {
     // WAITING — reload terus
     console.log("🔄 Reload...", new Date().toLocaleTimeString());
     await page.reload({ waitUntil: "domcontentloaded" });
-    await new Promise((r) => setTimeout(r, RELOAD_INTERVAL));
+    // await new Promise((r) => setTimeout(r, RELOAD_INTERVAL));
   }
 
   console.log("✅ Selesai, lanjut flow berikutnya...");
